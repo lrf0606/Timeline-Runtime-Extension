@@ -1,0 +1,25 @@
+
+{
+    "DurationTime" : 0.383333333333333,
+    "ClipList"     : [
+        {
+            "Guid" : 0,
+            "StartTime" : 0.0,
+            "EndTime"   : 0.383333333333333,
+            "DurationTime" : 0.383333333333333,
+            "CmdName"      : "CmdTest1Clip",
+            "Fields"       : [
+                {
+                    "FieldName" : "A",
+                    "FieldType" : "Int32",
+                    "FieldValue" : "1"
+                },
+                {
+                    "FieldName" : "Postion",
+                    "FieldType" : "Vector3",
+                    "FieldValue" : "0,0,0"
+                }
+            ]
+        }
+    ]
+}
