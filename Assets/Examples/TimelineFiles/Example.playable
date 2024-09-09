@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7307861249687137564
+--- !u!114 &-7879270986980189720
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e397fd08bb5e38d4d89d92449ec551ac, type: 3}
-  m_Name: Test1Clip
+  m_Script: {fileID: 11500000, guid: 01dad748839e1b94ebad0c1a90914441, type: 3}
+  m_Name: ExampleClip2
   m_EditorClassIdentifier: 
-  A: 41
-  Postion: {x: 0.03, y: 0.72, z: 1.31}
---- !u!114 &-5812632024062901165
+  A: 99
+  B: this is a string
+  C: 0.33
+  D: 0.96
+--- !u!114 &-4240390307101778377
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23,37 +25,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7795271f8929c149bf9452582589293, type: 3}
-  m_Name: TestClip1
-  m_EditorClassIdentifier: 
-  A: 0
-  Postion: {x: 0, y: 0, z: 0}
-  B: 
---- !u!114 &-4911672139563932680
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a93dee9511c21742b371b97b1fca363, type: 3}
-  m_Name: Test2Clip
-  m_EditorClassIdentifier: 
-  Str: 
-  Flt: 0.82
---- !u!114 &-1721929138598761936
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa7992d237f232349859884835925035, type: 3}
-  m_Name: Test 1 Track
+  m_Script: {fileID: 11500000, guid: bff1b5ab11b9bbc4d90a9df0b1f65461, type: 3}
+  m_Name: Example Track 1
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -65,12 +38,12 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 0.11666666666666667
+    m_Start: 0.06666666666666643
     m_ClipIn: 0
-    m_Asset: {fileID: -7307861249687137564}
-    m_Duration: 0.6166666666666666
+    m_Asset: {fileID: -1673722506483802859}
+    m_Duration: 2.7833333333333337
     m_TimeScale: 1
-    m_ParentTrack: {fileID: -1721929138598761936}
+    m_ParentTrack: {fileID: -4240390307101778377}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
@@ -132,10 +105,10 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: Test1Clip
+    m_DisplayName: ExampleClip1
   m_Markers:
     m_Objects: []
---- !u!114 &-736876209419442789
+--- !u!114 &-1673722506483802859
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,12 +117,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 728ac8bd3fae68f4e8b04c1aa99fc788, type: 3}
-  m_Name: TestAsset
+  m_Script: {fileID: 11500000, guid: a301e82d9d138504980f7bee9173f286, type: 3}
+  m_Name: ExampleClip1
   m_EditorClassIdentifier: 
-  A: 0
-  Postion: {x: 0, y: 0, z: 0}
-  B: 
+  FaceDirection: {x: 1, y: 2}
+  Postion: {x: 3, y: 4, z: 5}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,19 +132,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
-  m_Name: New Timeline
+  m_Name: Example
   m_EditorClassIdentifier: 
   m_Version: 0
   m_Tracks:
-  - {fileID: -1721929138598761936}
-  - {fileID: 5884255681602558151}
-  m_FixedDuration: 7.15
+  - {fileID: -4240390307101778377}
+  - {fileID: 79389977919612741}
+  m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
     m_ScenePreview: 1
   m_DurationMode: 0
   m_MarkerTrack: {fileID: 0}
---- !u!114 &5884255681602558151
+--- !u!114 &79389977919612741
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,8 +153,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39ecd793bead9544ebed032384691fc7, type: 3}
-  m_Name: Test 2 Track
+  m_Script: {fileID: 11500000, guid: 927d871f84a625b42a70c5a01c1d724a, type: 3}
+  m_Name: Example Track 2
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -194,12 +166,12 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 0
+    m_Start: 0.06666666666666643
     m_ClipIn: 0
-    m_Asset: {fileID: 7927353986539843678}
-    m_Duration: 0.3333333333333333
+    m_Asset: {fileID: -7879270986980189720}
+    m_Duration: 1.5166666666666666
     m_TimeScale: 1
-    m_ParentTrack: {fileID: 5884255681602558151}
+    m_ParentTrack: {fileID: 79389977919612741}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
@@ -261,14 +233,14 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: Test2Clip
+    m_DisplayName: ExampleClip2
   - m_Version: 1
-    m_Start: 0.45
+    m_Start: 2.316666666666667
     m_ClipIn: 0
-    m_Asset: {fileID: -4911672139563932680}
-    m_Duration: 0.1499999999999999
+    m_Asset: {fileID: 2808424144020311629}
+    m_Duration: 0.7666666666666666
     m_TimeScale: 1
-    m_ParentTrack: {fileID: 5884255681602558151}
+    m_ParentTrack: {fileID: 79389977919612741}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
@@ -330,10 +302,10 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: Test2Clip
+    m_DisplayName: ExampleClip2
   m_Markers:
     m_Objects: []
---- !u!114 &7927353986539843678
+--- !u!114 &2808424144020311629
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -342,8 +314,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a93dee9511c21742b371b97b1fca363, type: 3}
-  m_Name: Test2Clip
+  m_Script: {fileID: 11500000, guid: 01dad748839e1b94ebad0c1a90914441, type: 3}
+  m_Name: ExampleClip2
   m_EditorClassIdentifier: 
-  Str: str1
-  Flt: -2.73
+  A: -26
+  B: string
+  C: -0.54
+  D: -1.78

@@ -38,7 +38,7 @@ namespace TimelineRuntimeExtension
                 clipJsonData["StartTime"] = clip.start;
                 clipJsonData["EndTime"] = clip.end;
                 clipJsonData["DurationTime"] = clip.duration;
-                clipJsonData["CmdName"] = CodeGenerateConfig.GetCmdName(assetType);
+                clipJsonData["CmdName"] = CodeGenerateUtil.GetCmdName(assetType);
                 allEndTime = Math.Max(allEndTime, clip.end);
 
                 JsonData fieldListJsonData = new JsonData();
@@ -52,8 +52,8 @@ namespace TimelineRuntimeExtension
                     string fieldType = field.FieldType.Name;
                     fieldJsonData["FieldName"] = field.Name;
                     fieldJsonData["FieldType"] = fieldType;
-                    var fieldValue = field.GetValue(clip.asset);
-                    fieldJsonData["FieldValue"] = fieldValue != null ? ValueParserUtil.ToString(fieldType, fieldValue) : "";
+                    var fieldValue = field.GetValue(clip.asset);     
+                    fieldJsonData["FieldValue"] = fieldValue != null ? fieldValue.ToString() : "";
                     fieldListJsonData.Add(fieldJsonData);
                 }
                 clipJsonData["Fields"] = fieldListJsonData;

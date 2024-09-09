@@ -2,20 +2,23 @@ using LitJson;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 
 namespace TimelineRuntimeExtension
 {
     public class TimelineBase
     {
-        public List<TimelineCmdBase> CmdList;
-        public double DurationTime;
-        public double CurrentTime;
+        public List<TimelineCmdBase> m_CmdList;
+        public double m_DurationTime;
+        public double m_CurrentTime;
      
-        public bool IsStart;
-        public bool IsEnd;
+        private bool m_IsStart;
+        private bool m_IsEnd;
+
+        public TimelineBase()
+        {
+            m_CmdList = new List<TimelineCmdBase>();
+        }
 
         public void InitlizationByFile(string assetPath)
         {
@@ -27,9 +30,9 @@ namespace TimelineRuntimeExtension
             {
                 foreach (JsonData cmdJsonData in jsonData["ClipList"])
                 {
-                    var cmd = CmdFactory.CreateCmdInstance((string)cmdJsonData["CmdName"]);
+                    var cmd = TimelineExtensionCmdFactory.CreateCmdInstance((string)cmdJsonData["CmdName"]);
                     cmd.LoadJsonData(cmdJsonData);
-                    cmd.Owner = this;
+                    cmd.m_Owner = this;
                     cmdList.Add(cmd);
                 }
             }
@@ -38,51 +41,51 @@ namespace TimelineRuntimeExtension
 
         public void Initlization(List<TimelineCmdBase> cmdList, double durationTime)
         {
-            CmdList = cmdList;
-            DurationTime = durationTime;
-            CurrentTime = 0f;
-            IsStart = false;
-            IsEnd = false;
+            m_CmdList = cmdList;
+            m_DurationTime = durationTime;
+            m_CurrentTime = 0f;
+            m_IsStart = false;
+            m_IsEnd = false;
         }
 
         public void Start()
         {
-            IsStart = true;
+            m_IsStart = true;
         }
 
         public void Update(double deltaTime)
         {
-            if (!IsStart || IsEnd)
+            if (!m_IsStart || m_IsEnd)
             {
                 return;
             }
-            var lastTime = CurrentTime;
-            var nextTime = CurrentTime + deltaTime;
-            CurrentTime = nextTime;
-            foreach(var cmd in CmdList)
+            var lastTime = m_CurrentTime;
+            var nextTime = m_CurrentTime + deltaTime;
+            m_CurrentTime = nextTime;
+            foreach(var cmd in m_CmdList)
             {
-                if (!cmd.IsStart)
+                if (!cmd.m_IsStart)
                 {
-                    if (lastTime <= cmd.StartTime && nextTime >=cmd.StartTime)
+                    if (lastTime <= cmd.m_StartTime && nextTime >=cmd.m_StartTime)
                     {
                         cmd.Start();
                     }
                 }
-                if (!cmd.IsStart)
+                if (!cmd.m_IsStart)
                 {
                     continue;
                 }
-                if (nextTime > cmd.StartTime)
+                if (nextTime > cmd.m_StartTime)
                 {
-                    cmd.Update(Math.Min(nextTime, cmd.EndTime) - Math.Max(lastTime, cmd.StartTime));
+                    cmd.Update(Math.Min(nextTime, cmd.m_EndTime) - Math.Max(lastTime, cmd.m_StartTime));
                 }
 
-                if (lastTime < cmd.EndTime && nextTime >= cmd.EndTime)
+                if (lastTime < cmd.m_EndTime && nextTime >= cmd.m_EndTime)
                 {
                     cmd.End();
                 }
             }
-            if (nextTime >= DurationTime)
+            if (nextTime >= m_DurationTime)
             {
                 End();
             }
@@ -90,7 +93,7 @@ namespace TimelineRuntimeExtension
 
         public void End()
         {
-            IsEnd = true;
+            m_IsEnd = true;
         }
     }
 }

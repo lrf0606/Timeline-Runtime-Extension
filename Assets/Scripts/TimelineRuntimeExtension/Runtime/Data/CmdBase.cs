@@ -5,15 +5,15 @@ namespace TimelineRuntimeExtension
 {
     public abstract class TimelineCmdBase
     {
-        public int Id;
-        public double StartTime;
-        public double EndTime;
-        public double DurationTime;
-        public double CurrentTime;
+        public int m_ID;
+        public double m_StartTime;
+        public double m_EndTime;
+        public double m_DurationTime;
+        public double m_CurrentTime;
 
-        public TimelineBase Owner;
-        public bool IsStart;
-        public bool IsEnd;
+        public TimelineBase m_Owner;
+        public bool m_IsStart;
+        public bool m_IsEnd;
 
         public void LoadJsonData(JsonData jsonData)
         {
@@ -38,13 +38,13 @@ namespace TimelineRuntimeExtension
 
         public void Initlization(int id, double startTime, double endTime, double durationTime)
         {
-            Id = id;
-            StartTime = startTime;
-            EndTime = endTime;
-            DurationTime = durationTime;
-            CurrentTime = 0f;
-            IsStart = false;
-            IsEnd = false;
+            m_ID = id;
+            m_StartTime = startTime;
+            m_EndTime = endTime;
+            m_DurationTime = durationTime;
+            m_CurrentTime = 0f;
+            m_IsStart = false;
+            m_IsEnd = false;
         }
 
         public void Update(double deltaTime)
@@ -54,13 +54,13 @@ namespace TimelineRuntimeExtension
 
         public void Start()
         {
-            IsStart = true;
+            m_IsStart = true;
             OnStart();
         }
 
         public void End()
         {
-            IsEnd = true;
+            m_IsEnd = true;
             OnEnd();
         }
 

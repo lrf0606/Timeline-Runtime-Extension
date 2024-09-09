@@ -4,17 +4,15 @@ using UnityEngine.Playables;
 namespace TimelineRuntimeExtension
 {
     [CmdCodeGenerate]
-    public class Test2Clip : PlayableAsset
+    public class ExampleClip1 : PlayableAsset
     {
-        public string Str;
-        public float Flt;
+        public Vector2 FaceDirection;
+        public Vector3 Postion;
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<Test2Behaviour>.Create(graph);
+            var playable = ScriptPlayable<ExampleBehaviour1>.Create(graph);
             return playable;
         }
     }
 }
-
-

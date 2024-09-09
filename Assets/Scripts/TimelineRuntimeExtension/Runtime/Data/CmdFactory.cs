@@ -4,11 +4,11 @@ using System.Collections.Generic;
 namespace TimelineRuntimeExtension
 {
     public delegate TimelineCmdBase CreateCmdDelegate();
-    public static partial class CmdFactory
+    public static partial class TimelineExtensionCmdFactory
     {
         private static Dictionary<string, CreateCmdDelegate> m_CreateFuncDict;
 
-        static CmdFactory()
+        static TimelineExtensionCmdFactory()
         {
             m_CreateFuncDict = new Dictionary<string, CreateCmdDelegate>();
         }

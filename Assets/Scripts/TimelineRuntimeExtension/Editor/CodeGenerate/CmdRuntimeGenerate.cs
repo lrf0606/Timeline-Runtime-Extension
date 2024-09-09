@@ -9,33 +9,44 @@ namespace TimelineRuntimeExtension
 {
     static class CmdRuntimeGenerate
     {
+        const string GenerateStart = "// === Code CmdRuntime Generate start ===";
+        const string GenerateEnd = "// === Code CmdRuntime Generate end ===";
+        const string OverrideStart = "// === Cmd Override Start ===";
+        const string OverrideEnd = "// === Cmd Override End ===";
+
         public static void Generate()
         {
-            CodeGenerateConfig.MakeSureGenenrateDirectory();
-            foreach(var type in CodeGenerateConfig.GetAllCmdCodeGenerateTypes())
+            string directory = CodeGenerateUtil.MakeSureGenenrateDirectory();
+            foreach(var type in CodeGenerateUtil.GetAllCmdCodeGenerateTypes())
             {
-                string filePath = Path.Combine(CodeGenerateConfig.FolderPath, $"{CodeGenerateConfig.GetCmdName(type)}.cs");
+                string filePath = Path.Combine(directory, $"{CodeGenerateUtil.GetCmdName(type)}.cs");
+                string code = GetCmdCode(type, filePath);
                 if (File.Exists(filePath))
                 {
-                    continue;
+                    string source = File.ReadAllText(filePath);
+                    code = CodeGenerateUtil.ReplaceStringByStartAndEnd(source, code, GenerateStart, GenerateEnd);
                 }
-                string code = GetCmdCode(type);
+                else
+                {
+                    code = $"using System;{Environment.NewLine}{code}"; // 加个using防止后续编辑器自动不全using到错误位置
+                }
                 File.WriteAllText(filePath, code);
             }
         }
 
-        private static string GetCmdCode(Type type)
+        private static string GetCmdCode(Type type, string filePath)
         {
             var code = new StringBuilder();
-            code.AppendLine($"using {typeof(ValueParserUtil).Namespace};");
+            code.AppendLine(GenerateStart);
             code.AppendLine($"namespace {type.Namespace}");
             code.AppendLine("{");
-            code.AppendLine($"    public class {CodeGenerateConfig.GetCmdName(type)} : {typeof(TimelineCmdBase).Name}");
+            code.AppendLine($"    public class {CodeGenerateUtil.GetCmdName(type)} : {typeof(TimelineCmdBase).Name}");
             code.AppendLine("    {");
             code.AppendLine(GetCmdFieldCode(type));
-            code.AppendLine(GetCmdFuctionCode());
+            code.AppendLine(GetCmdFuctionCode(filePath));
             code.AppendLine("    }");
             code.AppendLine("}");
+            code.AppendLine(GenerateEnd);
             return code.ToString();
         }
 
@@ -50,7 +61,7 @@ namespace TimelineRuntimeExtension
                     continue;
                 }
                 fieldList.Add(field);
-                code.AppendLine($"        public {field.FieldType} {field.Name};");
+                code.AppendLine($"        public {ValueParserUtil.GetFieldTypeTransform(field.FieldType.Name)} {field.Name};");
             }
             if (fieldList.Count > 0)
             {
@@ -61,7 +72,7 @@ namespace TimelineRuntimeExtension
                 foreach (var field in fieldList) 
                 {
                     code.AppendLine($"                case \"{field.Name}\":");
-                    code.AppendLine($"                    {field.Name} = {typeof(ValueParserUtil).Name}.ToObject<{field.FieldType}>(fieldType, fieldValue); break;");
+                    code.AppendLine($"                    {field.Name} = ({ValueParserUtil.GetFieldTypeTransform(field.FieldType.Name)}){typeof(ValueParserUtil).Namespace}.{typeof(ValueParserUtil).Name}.ToObject(fieldType, fieldValue); break;");
                 }
                 code.AppendLine("            }");
                 code.AppendLine("        }");
@@ -69,22 +80,38 @@ namespace TimelineRuntimeExtension
             return code.ToString();
         }
 
-        private static string GetCmdFuctionCode()
+        private static string GetCmdFuctionCode(string filePath)
         {
-            var code = new StringBuilder();
-            code.AppendLine("        public override void OnStart()");
-            code.AppendLine("        {");
-            code.AppendLine("            // logic when cmd start");
-            code.AppendLine("        }");
-            code.AppendLine("        public override void OnUpdate(double deltaTime)");
-            code.AppendLine("        {");
-            code.AppendLine("            // logic when cmd update");
-            code.AppendLine("        }");
-            code.AppendLine("        public override void OnEnd()");
-            code.AppendLine("        {");
-            code.AppendLine("            // logic when cmd end");
-            code.AppendLine("        }");
-            return code.ToString();
+            string oldExecLogicCode = "";
+            if (File.Exists(filePath))
+            {
+                string allCode = File.ReadAllText(filePath);
+                oldExecLogicCode = CodeGenerateUtil.GetStringByStartAndEnd(allCode, OverrideStart, OverrideEnd);
+            }
+            if (string.IsNullOrEmpty(oldExecLogicCode))
+            {
+                var code = new StringBuilder();
+                code.AppendLine($"        {OverrideStart}");
+                code.AppendLine("        public override void OnStart()");
+                code.AppendLine("        {");
+                code.AppendLine("            // logic when cmd start");
+                code.AppendLine("        }");
+                code.AppendLine("        public override void OnUpdate(double deltaTime)");
+                code.AppendLine("        {");
+                code.AppendLine("            // logic when cmd update");
+                code.AppendLine("        }");
+                code.AppendLine("        public override void OnEnd()");
+                code.AppendLine("        {");
+                code.AppendLine("            // logic when cmd end");
+                code.AppendLine("        }");
+                code.ToString();
+                code.AppendLine($"        {OverrideEnd}");
+                return code.ToString();
+            }
+            else
+            {
+                return oldExecLogicCode;
+            }
         }
     }
 }
